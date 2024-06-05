@@ -30,7 +30,7 @@ class Database {
     constructor(knexConfig = null) {
         if (knexConfig === null) {
             knexConfig = {
-                client: 'mysql',
+                client: 'mysql2',
                 connection: {
                     host: Config.get('mysql.server'),
                     port: Config.get('mysql.port'),

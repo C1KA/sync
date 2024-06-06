@@ -195,6 +195,8 @@
                 return id;
             case "gd":
                 return "https://docs.google.com/file/d/" + id;
+            case "tx":
+                return "https://x.com/i/broadcasts/" + id;
             case "fi":
                 return id;
             case "hl":

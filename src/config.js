@@ -387,7 +387,7 @@ function preprocessConfig(cfg) {
     }
 
     if (cfg["youtube-v3-key"]) {
-        require("@cytube/mediaquery/lib/provider/youtube").setApiKey(
+        require("@C1KA/mediaquery/lib/provider/youtube").setApiKey(
                 cfg["youtube-v3-key"]);
     } else {
         LOGGER.warn("No YouTube v3 API key set.  YouTube links will " +
@@ -397,9 +397,9 @@ function preprocessConfig(cfg) {
     }
 
     if (cfg["twitch-client-id"]) {
-        require("@cytube/mediaquery/lib/provider/twitch-vod").setClientID(
+        require("@C1KA/mediaquery/lib/provider/twitch-vod").setClientID(
                 cfg["twitch-client-id"]);
-        require("@cytube/mediaquery/lib/provider/twitch-clip").setClientID(
+        require("@C1KA/mediaquery/lib/provider/twitch-clip").setClientID(
                 cfg["twitch-client-id"]);
     } else {
         LOGGER.warn("No Twitch Client ID set.  Twitch VOD links will " +

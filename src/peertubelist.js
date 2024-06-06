@@ -1,4 +1,4 @@
-import { fetchPeertubeDomains, setDomains } from '@cytube/mediaquery/lib/provider/peertube';
+import { fetchPeertubeDomains, setDomains } from '@C1KA/mediaquery/lib/provider/peertube';
 import { stat, readFile, writeFile } from 'node:fs/promises';
 import path from 'path';
 

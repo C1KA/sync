@@ -26,6 +26,8 @@ function formatURL(data) {
     switch(data.type) {
         case "yt":
             return "https://youtube.com/watch?v=" + data.id;
+        case "tx":
+            return "https://x.com/i/broadcasts/" +data.id;
         case "vi":
             return "https://vimeo.com/" + data.id;
         case "dm":
@@ -1293,6 +1295,7 @@ function checkYP(id) {
     }
 }
 
+// eslint-disable-next-line no-unused-vars
 function parseMediaLink(url) {
     function parseShortCode(url){
         const type = url.slice(0,2);
@@ -1367,9 +1370,9 @@ function parseMediaLink(url) {
                 checkYP(data.searchParams.get('list'));
                 return { type: 'yp', id: data.searchParams.get('list') }
             }
+        // eslint-disable-next-line no-fallthrough
         case 'youtu.be':
             return { type: 'yt', id: data.pathname.slice(1) }
-
         case 'twitch.tv':
             if(data.pathname.includes('/clip/')){
                 return { type: 'tc', id: data.pathname.split('/').pop() }
@@ -1392,6 +1395,7 @@ function parseMediaLink(url) {
                 throw livestream();
             }
 
+        // eslint-disable-next-line no-fallthrough
         case 'vimeo.com':
             return { type: 'vi', id: data.pathname.slice(1) }
         case 'dailymotion.com':
@@ -1409,22 +1413,29 @@ function parseMediaLink(url) {
             if(data.pathname == '/open'){
                 return { type: 'gd', id: data.searchParams.get('id') }
             }
-
+        // eslint-disable-next-line no-fallthrough
         case 'bitchute.com':
             if(data.pathname.startsWith('/video/')){
                 return { type: 'bc', id: `${data.pathname.slice(7).split('/').shift()}` }
             }
 
+        // eslint-disable-next-line no-fallthrough
         case 'nicovideo.jp':
             if(data.pathname.startsWith('/watch/')){
                 return { type: 'nv', id: `${data.pathname.slice(7).split('/').shift()}` }
             }
 
+        // eslint-disable-next-line no-fallthrough
         case 'odysee.com':
             const format = new RegExp('/@(?<user>[^:]+)(?::\\w)?/(?<video>[^:]+)');
             if(format.test(data.pathname)){
                 const {user,video} = (data.pathname.match(format)['groups']);
                 return { type: 'od', id: `${user};${video}` }
+            }
+        // eslint-disable-next-line no-fallthrough
+        case 'x.com':
+            if(data.pathname.startsWith('/broadcasts/')){
+                return { type: 'tx', id: `${data.pathname.slice(12).split('/').shift()}` }
             }
     }
 
@@ -1914,6 +1925,7 @@ handleWindowResize();
 function removeVideo(event) {
     try {
         PLAYER.setVolume(0);
+    // eslint-disable-next-line no-empty
     } catch (e) {
     }
 

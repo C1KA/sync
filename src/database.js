@@ -82,10 +82,10 @@ module.exports.init = function (newDB) {
             .then(() => {
                 require('./database/update').checkVersion();
                 module.exports.loadAnnouncement();
-                require('@cytube/mediaquery/lib/provider/youtube').setCache(
+                require('@C1KA/mediaquery/lib/provider/youtube').setCache(
                     new MetadataCacheDB(db)
                 );
-                require('@cytube/mediaquery/lib/provider/bitchute').setCache(
+                require('@C1KA/mediaquery/lib/provider/bitchute').setCache(
                     new MetadataCacheDB(db)
                 );
             }).catch(error => {

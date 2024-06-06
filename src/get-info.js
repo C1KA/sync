@@ -3,17 +3,18 @@ const Media = require("./media");
 const CustomEmbedFilter = require("./customembed").filter;
 const Config = require("./config");
 const ffmpeg = require("./ffmpeg");
-const mediaquery = require("@cytube/mediaquery");
-const YouTube = require("@cytube/mediaquery/lib/provider/youtube");
-const Vimeo = require("@cytube/mediaquery/lib/provider/vimeo");
-const Odysee = require("@cytube/mediaquery/lib/provider/odysee");
-const PeerTube = require("@cytube/mediaquery/lib/provider/peertube");
-const BitChute = require("@cytube/mediaquery/lib/provider/bitchute");
-const BandCamp = require("@cytube/mediaquery/lib/provider/bandcamp");
-const Nicovideo = require("@cytube/mediaquery/lib/provider/nicovideo");
-const Streamable = require("@cytube/mediaquery/lib/provider/streamable");
-const TwitchVOD = require("@cytube/mediaquery/lib/provider/twitch-vod");
-const TwitchClip = require("@cytube/mediaquery/lib/provider/twitch-clip");
+const mediaquery = require("@C1KA/mediaquery");
+const YouTube = require("@C1KA/mediaquery/lib/provider/youtube");
+const Vimeo = require("@C1KA/mediaquery/lib/provider/vimeo");
+const Odysee = require("@C1KA/mediaquery/lib/provider/odysee");
+const PeerTube = require("@C1KA/mediaquery/lib/provider/peertube");
+const BitChute = require("@C1KA/mediaquery/lib/provider/bitchute");
+const BandCamp = require("@C1KA/mediaquery/lib/provider/bandcamp");
+const Nicovideo = require("@C1KA/mediaquery/lib/provider/nicovideo");
+const Streamable = require("@C1KA/mediaquery/lib/provider/streamable");
+const TwitchVOD = require("@C1KA/mediaquery/lib/provider/twitch-vod");
+const TwitchClip = require("@C1KA/mediaquery/lib/provider/twitch-clip");
+const Twitter = require("@C1KA/mediaquery/lib/provider/twitter");
 import { Counter } from 'prom-client';
 import { lookup as lookupCustomMetadata } from './custom-media';
 
@@ -275,6 +276,24 @@ var Getters = {
         TwitchClip.lookup(id).then(video => {
             const media = new Media(video.id, video.title, video.duration,
                                     "tc", video.meta);
+            process.nextTick(callback, false, media);
+        }).catch(function (err) {
+            callback(err.message || err, null);
+        });
+    },
+
+    /* twitter.com */
+    tx: function (id, callback) {
+        var m = id.match(/^([A-Za-z]+)$/);
+        if (m) {
+            id = m[1];
+        } else {
+            process.nextTick(callback, "Invalid Twitter Video/Stream ID");
+            return;
+        }
+
+        Twitter.lookup(id).then(video => {
+            const media = new Media(video.id, video.title, video.duration, "tx", video.meta);
             process.nextTick(callback, false, media);
         }).catch(function (err) {
             callback(err.message || err, null);

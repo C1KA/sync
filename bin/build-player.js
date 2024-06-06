@@ -12,6 +12,7 @@ var order = [
     'peertube.coffee',
     'soundcloud.coffee',
     'twitch.coffee',
+    'twitter.coffee',
     'vimeo.coffee',
     'youtube.coffee',
 
